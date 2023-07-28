@@ -1,8 +1,9 @@
 import './globals.css'
+import MainHeader from '@/components/main-header/main-header'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Open_Sans } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+const OpenSans = Open_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={OpenSans.className}>
+        <MainHeader />
+        {children}
+      </body>
     </html>
   )
 }
