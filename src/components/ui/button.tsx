@@ -14,5 +14,9 @@ export default function Button({ link, onClick, children }: ButtonProps) {
       </Link>
     )
   }
-  return <button onClick={onClick}>{children}</button>
+  return (
+    <button onClick={onClick} className={classes.btn}>
+      {children}
+    </button>
+  )
 }
