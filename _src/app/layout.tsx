@@ -1,5 +1,4 @@
 import './globals.css'
-import MainHeader from '@/components/main-header/main-header'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 
@@ -17,10 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={OpenSans.className}>
-        <MainHeader />
-        {children}
-      </body>
+      <body className={OpenSans.className}>{children}</body>
     </html>
   )
 }
