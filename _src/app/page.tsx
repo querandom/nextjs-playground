@@ -1,5 +1,6 @@
 import path from 'path'
 import fs from 'fs/promises'
+import Link from 'next/link'
 
 export default async function Home() {
   const pathname = path.join(process.cwd(), 'data', 'dummy-backend.json')
@@ -15,7 +16,9 @@ export default async function Home() {
     <div>
       <ol>
         {products.products?.map((p) => (
-          <li key={p.id}>{p.title}</li>
+          <li key={p.id}>
+            <Link href={`/products/${p.id}`}>{p.title}</Link>
+          </li>
         ))}
       </ol>
     </div>

@@ -2,7 +2,7 @@ import path from 'path'
 import fs from 'fs/promises'
 
 import { GetStaticPaths, GetStaticProps } from 'next/types'
-import { Product } from '../types/product'
+import { Product } from '../../types/product'
 
 export interface ProductDetailPageProps {
   product: Product
