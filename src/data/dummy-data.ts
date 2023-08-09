@@ -1,3 +1,5 @@
+import { filterEventsByDate, filterFeaturedEvents } from './utils'
+
 const DUMMY_EVENTS = [
   {
     id: 'e1',
@@ -31,10 +33,8 @@ const DUMMY_EVENTS = [
   },
 ]
 
-export type AwesomeEvent = (typeof DUMMY_EVENTS)[0]
-
 export function getFeaturedEvents() {
-  return DUMMY_EVENTS.filter((event) => event.isFeatured)
+  return filterFeaturedEvents(DUMMY_EVENTS)
 }
 
 export function getAllEvents() {
@@ -42,16 +42,10 @@ export function getAllEvents() {
 }
 
 export function getFilteredEvents(dateFilter: { year: number; month: number }) {
-  const { year, month } = dateFilter
-
-  let filteredEvents = DUMMY_EVENTS.filter((event) => {
-    const eventDate = new Date(event.date)
-    return (
-      eventDate.getFullYear() === year && eventDate.getMonth() === month - 1
-    )
+  return filterEventsByDate(DUMMY_EVENTS, {
+    year: dateFilter.year,
+    month: dateFilter.month,
   })
-
-  return filteredEvents
 }
 
 export function getEventById(id: string) {

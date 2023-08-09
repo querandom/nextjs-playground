@@ -5,16 +5,13 @@ import ErrorAlert from '@/components/ui/error-alert'
 import { fetchEvents } from '@/data/fetch-events'
 import { AwesomeEvent } from '@/data/types'
 import { getEventById } from '@/data/utils'
+import { GetStaticPaths, GetStaticProps } from 'next/types'
 
 export interface EventDetailProps {
-  params: { id: string }
+  event: AwesomeEvent
 }
 
-export default async function EventDetail({ params }: EventDetailProps) {
-  const { id } = params
-  const events = await fetchEvents()
-  const event = getEventById(events, id)
-
+export default function EventDetail({ event }: EventDetailProps) {
   if (!event) {
     return (
       <ErrorAlert>
@@ -39,11 +36,34 @@ export default async function EventDetail({ params }: EventDetailProps) {
   )
 }
 
-export const revalidate = 60
-export const generateStaticParams = async () => {
+export const getStaticProps: GetStaticProps<EventDetailProps | {}> = async (
+  context
+) => {
+  const { params } = context
+  const id = params?.id
+
   const events = await fetchEvents()
 
-  return events.map((event) => ({
-    id: event.id,
-  }))
+  if (typeof id !== 'string') {
+    return {
+      redirect: {
+        destination: '/fallback-page',
+      },
+      props: {},
+    }
+  }
+
+  const event = getEventById(events || [], id)
+
+  return { props: { event }, revalidate: 60 }
+}
+
+export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
+  const events = await fetchEvents()
+  const pathsWithParams = events.map((e) => ({ params: { id: e.id } }))
+
+  return {
+    paths: pathsWithParams,
+    fallback: 'blocking',
+  }
 }

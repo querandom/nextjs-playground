@@ -1,23 +1,13 @@
-'use client'
-
 import EventList from '@/components/events/event-list'
-import EventsSearch from '@/components/events/events-search'
-import { getAllEvents } from '@/data/dummy-data'
-import { useRouter } from 'next/navigation'
+import { fetchEvents } from '@/data/fetch-events'
+import EventsSearchBar from './events-search-bar'
 
-function EventsPage() {
-  const events = getAllEvents()
-  const router = useRouter()
-
-  function onSearchHandler({ year, month }: { year: string; month: string }) {
-    const eventPage = `/events/${year}/${month}`
-
-    router.push(eventPage)
-  }
+async function EventsPage() {
+  const events = await fetchEvents()
 
   return (
     <>
-      <EventsSearch onSearch={onSearchHandler} />
+      <EventsSearchBar />
       <EventList items={events} />
     </>
   )

@@ -1,12 +1,14 @@
 import EventList from '@/components/events/event-list'
-import { getFeaturedEvents } from '@/data/dummy-data'
+import { fetchEvents } from '@/data/fetch-events'
+import { filterFeaturedEvents } from '@/data/utils'
 
-export default function Home() {
-  const events = getFeaturedEvents()
+export default async function Home() {
+  const events = await fetchEvents()
+  const featuredEvents = filterFeaturedEvents(events)
 
   return (
     <div>
-      <EventList items={events} />
+      <EventList items={featuredEvents} />
     </div>
   )
 }

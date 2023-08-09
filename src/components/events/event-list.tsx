@@ -1,4 +1,4 @@
-import { AwesomeEvent } from '@/data/dummy-data'
+import { AwesomeEvent } from '@/data/types'
 import EventItem from './event-item'
 
 import classes from './event-list.module.css'

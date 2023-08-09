@@ -2,13 +2,15 @@ import EventList from '@/components/events/event-list'
 import ResultsTitle from '@/components/events/results-title'
 import Button from '@/components/ui/button'
 import ErrorAlert from '@/components/ui/error-alert'
-import { getFilteredEvents } from '@/data/dummy-data'
+// import { getFilteredEvents } from '@/data/dummy-data'
+import { fetchEvents } from '@/data/fetch-events'
+import { filterEventsByDate } from '@/data/utils'
 
 export interface FilteredEventsProps {
   params: { slug: string[] }
 }
 
-export default function FilteredEvents({ params }: FilteredEventsProps) {
+export default async function FilteredEvents({ params }: FilteredEventsProps) {
   const [yearValue, monthValue] = params.slug
 
   const yearNumb = +yearValue
@@ -27,7 +29,11 @@ export default function FilteredEvents({ params }: FilteredEventsProps) {
     )
   }
 
-  const filteredEvents = getFilteredEvents({ year: yearNumb, month: monthNumb })
+  const events = await fetchEvents()
+  const filteredEvents = filterEventsByDate(events, {
+    year: yearNumb,
+    month: monthNumb,
+  })
 
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
