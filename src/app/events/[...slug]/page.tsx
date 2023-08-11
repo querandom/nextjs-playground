@@ -2,21 +2,31 @@ import EventList from '@/components/events/event-list'
 import ResultsTitle from '@/components/events/results-title'
 import Button from '@/components/ui/button'
 import ErrorAlert from '@/components/ui/error-alert'
-// import { getFilteredEvents } from '@/data/dummy-data'
 import { fetchEvents } from '@/data/fetch-events'
 import { filterEventsByDate } from '@/data/utils'
+import { parseSlug } from './utils'
+import { Metadata } from 'next/types'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string[] }
+}): Promise<Metadata> {
+  const { year, month } = parseSlug(params.slug)
+  return {
+    title: `Filtered Events`,
+    description: `All events for ${year}/${month}`,
+  }
+}
 
 export interface FilteredEventsProps {
   params: { slug: string[] }
 }
 
 export default async function FilteredEvents({ params }: FilteredEventsProps) {
-  const [yearValue, monthValue] = params.slug
+  const { year, month } = parseSlug(params.slug)
 
-  const yearNumb = +yearValue
-  const monthNumb = +monthValue
-
-  if (isNaN(yearNumb) || isNaN(monthNumb)) {
+  if (isNaN(year) || isNaN(month)) {
     return (
       <>
         <ErrorAlert>
@@ -31,8 +41,8 @@ export default async function FilteredEvents({ params }: FilteredEventsProps) {
 
   const events = await fetchEvents()
   const filteredEvents = filterEventsByDate(events, {
-    year: yearNumb,
-    month: monthNumb,
+    year: year,
+    month: month,
   })
 
   if (!filteredEvents || filteredEvents.length === 0) {
@@ -48,7 +58,7 @@ export default async function FilteredEvents({ params }: FilteredEventsProps) {
     )
   }
 
-  const date = new Date(yearNumb, monthNumb - 1)
+  const date = new Date(year, month - 1)
 
   return (
     <>

@@ -3,17 +3,42 @@ import EventLogistics from '@/components/event-detail/event-logistics'
 import EventSummary from '@/components/event-detail/event-summary'
 import ErrorAlert from '@/components/ui/error-alert'
 import { fetchEvents } from '@/data/fetch-events'
-import { AwesomeEvent } from '@/data/types'
 import { getEventById } from '@/data/utils'
+import { Metadata } from 'next'
+import Head from 'next/head'
 
+interface PageParams {
+  id: string
+}
 export interface EventDetailProps {
-  params: { id: string }
+  params: PageParams
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: PageParams
+}): Promise<Metadata> {
+  // read route params
+  const id = params.id
+
+  const event = await getEvent(id)
+  return {
+    title: `NextJS Event: ${event?.title}`,
+    description: `This is the event detail ${event?.title}`,
+  }
+}
+
+async function getEvent(id: string) {
+  const events = await fetchEvents()
+  const event = getEventById(events, id)
+
+  return event
 }
 
 export default async function EventDetail({ params }: EventDetailProps) {
   const { id } = params
-  const events = await fetchEvents()
-  const event = getEventById(events, id)
+  const event = await getEvent(id)
 
   if (!event) {
     return (
@@ -25,6 +50,14 @@ export default async function EventDetail({ params }: EventDetailProps) {
 
   return (
     <>
+      <Head>
+        <title>NextJS Events</title>
+        <meta
+          name="description"
+          content={`This is the event detail ${event.title}`}
+        />
+      </Head>
+
       <EventSummary title={event.title} />
       <EventLogistics
         date={event.date}
