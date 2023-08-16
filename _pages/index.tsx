@@ -3,6 +3,7 @@ import { fetchEvents } from '@/data/fetch-events'
 import { AwesomeEvent } from '@/data/types'
 import { filterFeaturedEvents } from '@/data/utils'
 import { GetStaticProps } from 'next'
+import Head from 'next/head'
 
 export interface HomeProps {
   events: AwesomeEvent[]
@@ -11,6 +12,14 @@ export interface HomeProps {
 export default function Home({ events }: any) {
   return (
     <div>
+      <Head>
+        <title>NextJS Events</title>
+        <meta
+          name="description"
+          content="This is description for engine crawlers."
+        />
+      </Head>
+
       <EventList items={events} />
     </div>
   )

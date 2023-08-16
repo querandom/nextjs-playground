@@ -2,6 +2,7 @@ import EventsSearchBar from '@/app/events/events-search-bar'
 import EventList from '@/components/events/event-list'
 import { fetchEvents } from '@/data/fetch-events'
 import { AwesomeEvent } from '@/data/types'
+import Head from 'next/head'
 import { GetStaticProps } from 'next/types'
 
 export interface EventsPageProps {
@@ -11,6 +12,10 @@ export interface EventsPageProps {
 export default function EventsPage({ events }: EventsPageProps) {
   return (
     <>
+      <Head>
+        <title>NextJS Events</title>
+        <meta name="description" content="All events" />
+      </Head>
       <EventsSearchBar />
       <EventList items={events} />
     </>

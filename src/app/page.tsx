@@ -4,10 +4,10 @@ import { fetchEvents } from '@/data/fetch-events'
 import { filterFeaturedEvents } from '@/data/utils'
 import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'NextJS Events',
-  description: 'This is description for engine crawlers.',
-}
+// export const metadata: Metadata = {
+//   title: 'NextJS Events',
+//   description: 'This is description for engine crawlers.',
+// }
 
 export default async function Home() {
   const events = await fetchEvents()

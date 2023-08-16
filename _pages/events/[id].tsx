@@ -5,6 +5,7 @@ import ErrorAlert from '@/components/ui/error-alert'
 import { fetchEvents } from '@/data/fetch-events'
 import { AwesomeEvent } from '@/data/types'
 import { getEventById } from '@/data/utils'
+import Head from 'next/head'
 import { GetStaticPaths, GetStaticProps } from 'next/types'
 
 export interface EventDetailProps {
@@ -22,6 +23,13 @@ export default function EventDetail({ event }: EventDetailProps) {
 
   return (
     <>
+      <Head>
+        <title>{`NextJS Event: ${event?.title}`}</title>
+        <meta
+          name="description"
+          content={`This is the event detail ${event?.title}`}
+        />
+      </Head>
       <EventSummary title={event.title} />
       <EventLogistics
         date={event.date}
