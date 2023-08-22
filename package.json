@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-course",
+  "name": "nextjs-blog-tutorial",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,16 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/node": "20.4.2",
-    "@types/react": "18.2.15",
+    "@types/node": "20.5.3",
+    "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
-    "eslint": "8.45.0",
-    "eslint-config-next": "13.4.10",
-    "mongodb": "^5.8.0",
-    "next": "13.4.10",
+    "eslint": "8.47.0",
+    "eslint-config-next": "13.4.19",
+    "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "swr": "^2.2.0",
     "typescript": "5.1.6"
   }
 }
