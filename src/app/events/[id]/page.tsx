@@ -1,6 +1,7 @@
 import EventContent from '@/components/event-detail/event-content'
 import EventLogistics from '@/components/event-detail/event-logistics'
 import EventSummary from '@/components/event-detail/event-summary'
+import Comments from '@/components/input/comments'
 import ErrorAlert from '@/components/ui/error-alert'
 import { fetchEvents } from '@/data/fetch-events'
 import { getEventById } from '@/data/utils'
@@ -67,6 +68,7 @@ export default async function EventDetail({ params }: EventDetailProps) {
       />
       <EventContent>
         <p>{event.description}</p>
+        <Comments eventId={event.id} />
       </EventContent>
     </>
   )

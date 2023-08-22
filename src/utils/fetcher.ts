@@ -1,3 +1,3 @@
-export function fetcher<T>(url: string) {
-  return fetch(url).then((r) => r.json() as Promise<T>)
+export function fetcher<T>(url: string, opts?: RequestInit) {
+  return fetch(url, opts).then((r) => r.json() as Promise<T>)
 }

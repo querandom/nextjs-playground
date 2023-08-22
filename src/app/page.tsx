@@ -1,8 +1,8 @@
-import Head from 'next/head'
 import EventList from '@/components/events/event-list'
 import { fetchEvents } from '@/data/fetch-events'
 import { filterFeaturedEvents } from '@/data/utils'
 import { Metadata } from 'next'
+import NewsletterRegistration from '@/components/input/newsletter-registration'
 
 // export const metadata: Metadata = {
 //   title: 'NextJS Events',
@@ -22,6 +22,7 @@ export default async function Home() {
           content="This is description for engine crawlers."
         />
       </Head> */}
+      <NewsletterRegistration />
       <EventList items={featuredEvents} />
     </div>
   )

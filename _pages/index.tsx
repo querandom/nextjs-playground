@@ -1,4 +1,5 @@
 import EventList from '@/components/events/event-list'
+import NewsletterRegistration from '@/components/input/newsletter-registration'
 import { fetchEvents } from '@/data/fetch-events'
 import { AwesomeEvent } from '@/data/types'
 import { filterFeaturedEvents } from '@/data/utils'
@@ -19,7 +20,7 @@ export default function Home({ events }: any) {
           content="This is description for engine crawlers."
         />
       </Head>
-
+      <NewsletterRegistration />
       <EventList items={events} />
     </div>
   )
