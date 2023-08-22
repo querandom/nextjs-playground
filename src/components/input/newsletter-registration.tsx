@@ -2,10 +2,11 @@
 
 import { FormEvent, useRef, useState } from 'react'
 import classes from './newsletter-registration.module.css'
-import { fetcher } from '@/utils/fetcher'
+import { useNotificationContext } from '@/store/notification-context'
 
 function NewsletterRegistration() {
   const [isInvalid, setIsInvalid] = useState(false)
+  const notificationCtx = useNotificationContext()
 
   const emailRef = useRef<HTMLInputElement>(null)
 
@@ -23,14 +24,41 @@ function NewsletterRegistration() {
     }
 
     try {
-      await fetcher('/api/newsletter', {
+      notificationCtx.showNotification({
+        title: 'Signing up...',
+        message: 'Registering for newsletter.',
+        status: 'pending',
+      })
+
+      await fetch('/api/newsletter', {
         method: 'POST',
         body: JSON.stringify({
           email: enteredEmail,
         }),
       })
-    } catch (e) {
-      console.log('Error subscribing to newsletter')
+        .then((response) => {
+          if (response.ok) {
+            return response.json()
+          }
+          return response.json().then((data) => {
+            throw new Error(data.message || 'Something went wrong!')
+          })
+        })
+        .then((data) => {
+          notificationCtx.showNotification({
+            title: 'Success!',
+            message: 'Successfully registered for newsletter.',
+            status: 'success',
+          })
+
+          return data
+        })
+    } catch (e: any) {
+      notificationCtx.showNotification({
+        title: 'Error!',
+        message: e?.message || 'Something went wrong!',
+        status: 'error',
+      })
     }
     // fetch user input (state or refs)
     // optional: validate input

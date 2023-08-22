@@ -1,17 +1,18 @@
-import RootLayout from '@/app/layout'
-
 import '@/app/globals.css'
-import MainHeader from '@/components/main-header/main-header'
+import Layout from '@/components/layout/layout'
+import { NotificationContextProvider } from '@/store/notification-context'
 import Head from 'next/head'
 
 export default function MyApp({ Component, pageProps }: any) {
   return (
-    <>
-      <Head>
-        <meta name="viewport" content="width=device-width" />
-      </Head>
-      <MainHeader />
-      <Component {...pageProps} />
-    </>
+    <NotificationContextProvider>
+      <Layout>
+        <Head>
+          <meta name="viewport" content="width=device-width" />
+        </Head>
+        <Component {...pageProps} />
+        {/* <Notification title message status /> */}
+      </Layout>
+    </NotificationContextProvider>
   )
 }

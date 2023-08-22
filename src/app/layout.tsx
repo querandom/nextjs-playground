@@ -1,5 +1,6 @@
+import Layout from '@/components/layout/layout'
 import './globals.css'
-import MainHeader from '@/components/main-header/main-header'
+import { NotificationContextProvider } from '@/store/notification-context'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 
@@ -19,8 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={OpenSans.className}>
-        <MainHeader />
-        {children}
+        <NotificationContextProvider>
+          <Layout>{children}</Layout>
+        </NotificationContextProvider>
       </body>
     </html>
   )

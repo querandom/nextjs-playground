@@ -13,12 +13,16 @@ export default async function handler(
       return
     }
 
-    const client = await getDBClient()
-    await insertOneInCollection(client, 'newsletter', 'emails', {
-      email: userEmail,
-    })
+    try {
+      const client = await getDBClient()
+      await insertOneInCollection(client, 'newsletter', 'emails', {
+        email: userEmail,
+      })
 
-    client.close()
+      client.close()
+    } catch (e) {
+      return res.status(500).json({ message: 'Error accessing to db' })
+    }
 
     res.status(201).json({ message: 'signed up!' })
     return
